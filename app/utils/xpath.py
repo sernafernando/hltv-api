@@ -166,6 +166,91 @@ class Events:
         PRIZE = "//div[@class = 'team' and .//a[contains(@href,'/team/{team_id}/')]]/following-sibling::div[@class='prize']/text()"
         PRIZE_CLUB_SHARE = "//div[@class = 'team' and .//a[contains(@href,'/team/{team_id}/')]]/following-sibling::div[@class='prize club-share']/text()"
         TEAM_PLACEMENT  = "//div[@class = 'team' and .//a[contains(@href,'/team/{team_id}/')]]/following-sibling::div[not(@class)]/text()"
-        
 
-    
+
+class Teams:
+    class Profile:
+        CANONICAL_URL = "//link[@rel='canonical']/@href"
+        TEAM_NAME = "//h1/text()"
+        LOGO_URL = "//div[contains(@class, 'profile-team')]//img/@src"
+        COUNTRY = "//div[contains(@class, 'team-country')]//img/@alt"
+        COUNTRY_FLAG_URL = "//div[contains(@class, 'team-country')]//img/@src"
+
+        # info stats
+        VALVE_RANKING = "//div[contains(@class, 'profile-team-stat')][.//b[text()='Valve ranking']]//a/text()"
+        WORLD_RANKING = "//div[contains(@class, 'profile-team-stat')][.//b[text()='World ranking']]//a/text()"
+        WEEKS_IN_TOP30 = "//div[contains(@class, 'profile-team-stat')][./b[text()='Weeks in top30 for core']]/span/text()"
+        AVG_PLAYER_AGE = "//div[contains(@class, 'profile-team-stat')][./b[text()='Average player age']]/span/text()"
+
+    class Roster:
+        # players table
+        PLAYER_ROWS = "//table[contains(@class, 'players-table')]//tbody//tr"
+        PLAYER_NICK = ".//div[contains(@class, 'playersBox-playernick')]//div[@class='text-ellipsis']/text()"
+        PLAYER_URL = ".//td[contains(@class, 'playersBox-first-cell')]//a/@href"
+        PLAYER_STATUS = ".//td[2]//div/text()"
+        PLAYER_TIME = ".//td[3]//div/text()"
+        PLAYER_MAPS = ".//td[4]//div/text()"
+        PLAYER_RATING = ".//td[last()]//div/text()"
+        PLAYER_NATIONALITY = ".//img[contains(@class, 'flag')]/@alt"
+
+        # coach table
+        COACH_ROWS = "//table[contains(@class, 'coach-table')]//tbody//tr"
+        COACH_NICK = ".//div[contains(@class, 'playersBox-playernick')]//div[@class='text-ellipsis']/text()"
+        COACH_URL = ".//td[contains(@class, 'playersBox-first-cell')]//a/@href"
+        COACH_TIME = ".//td[2]//div/text()"
+        COACH_MAPS = ".//td[3]//div/text()"
+        COACH_TROPHIES = ".//td[4]//div/text()"
+        COACH_WINRATE = ".//td[5]//div/text()"
+
+    class Matches:
+        # highlighted stats
+        WIN_STREAK = "//div[@id='matchesBox']//div[@class='highlighted-stat'][.//div[@class='description'][contains(text(), 'win streak')]]//div[@class='stat']/text()"
+        WIN_RATE = "//div[@id='matchesBox']//div[@class='highlighted-stat'][.//div[@class='description'][contains(text(), 'Win rate')]]//div[@class='stat']/text()"
+
+        # upcoming matches
+        UPCOMING_ROWS = "//h2[contains(text(), 'Upcoming matches')]/following-sibling::table[1]//tr[@class='team-row']"
+
+        # recent results
+        RESULTS_ROWS = "//h2[contains(text(), 'Recent results')]/following-sibling::table//tr[@class='team-row']"
+
+        # relative xpaths for each match row
+        ROW_DATE_UNIX = ".//td[@class='date-cell']//span/@data-unix"
+        ROW_TEAM1_NAME = ".//a[contains(@class, 'team-name team-1')]/text()"
+        ROW_TEAM1_URL = ".//a[contains(@class, 'team-name team-1')]/@href"
+        ROW_TEAM2_NAME = ".//a[contains(@class, 'team-name team-2')]/text()"
+        ROW_TEAM2_URL = ".//a[contains(@class, 'team-name team-2')]/@href"
+        ROW_SCORES = ".//div[contains(@class, 'score-cell')]//span[contains(@class, 'score') and not(contains(@class, 'divider'))]/text()"
+        ROW_MATCH_URL = ".//td[contains(@class, 'button-cell')]//a/@href"
+        ROW_EVENT_NAME = "./ancestor::table//tr[@class='event-header-cell']//a/text()"
+        ROW_EVENT_URL = "./ancestor::table//tr[@class='event-header-cell']//a/@href"
+
+    class UpcomingEvents:
+        EVENT_ITEMS = "//div[@id='ongoingEvents']//a[contains(@class, 'ongoing-event')]"
+        EVENT_NAME = ".//div[@class='eventbox-eventname']/text()"
+        EVENT_URL = "@href"
+        EVENT_DATES = ".//div[@class='eventbox-date']//span[@data-unix]/@data-unix"
+
+    class Achievements:
+        MAJOR_ROWS = "//div[@id='majorAchievement']//tr[@class='team']"
+        LAN_ROWS = "//div[@id='lanAchievement']//tr[@class='team']"
+        PLACEMENT = ".//div[contains(@class, 'achievement')]/text()"
+        TOURNAMENT_NAME = ".//td[@class='tournament-name-cell']/a/text()"
+        TOURNAMENT_URL = ".//td[@class='tournament-name-cell']/a/@href"
+
+    class MapStats:
+        MAP_CONTAINERS = "//div[@id='statsBox']//div[@class='map-statistics-container']"
+        MAP_NAME = ".//div[@class='map-statistics-row-map-mapname']/text()"
+        PICK_BAN_LABEL = ".//div[@class='pickban']/text()"
+        WIN_PERCENTAGE = ".//div[@class='map-statistics-row-win-percentage']/text()"
+        # W/D/L inside extended section
+        WDL_STATS = ".//div[contains(@class, 'map-statistics-extended-wdl')]//div[@class='highlighted-stat']"
+        WDL_VALUE = ".//div[@class='stat']/text()"
+        WDL_LABEL = ".//div[@class='description']/text()"
+        # general stats
+        GENERAL_STATS = ".//div[@class='map-statistics-extended-general-stat']"
+        GENERAL_STAT_LABEL = "./div[1]/text()"
+        GENERAL_STAT_VALUE = "./div[2]/text()"
+        # veto data
+        VETO_ITEMS = ".//div[@class='map-statistics-extended-highlight-veto']"
+        VETO_LABEL = "./div[1]/text()"
+        VETO_VALUE = "./div[2]/text()"
